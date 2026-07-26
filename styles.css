@@ -17,6 +17,7 @@ body {
     padding: 0 1.5rem;
 }
 
+/* ===== HEADER ===== */
 .header {
     background-color: #fff0f0;
     box-shadow: 0 2px 12px rgba(200, 0, 0, 0.08);
@@ -96,6 +97,7 @@ body {
     text-align: center;
 }
 
+/* ===== CATÁLOGO ===== */
 .main {
     padding: 2rem 1.5rem;
 }
@@ -113,6 +115,7 @@ body {
     gap: 1.8rem;
 }
 
+/* ===== TARJETA DE PRODUCTO ===== */
 .product-card {
     background: #fff;
     border-radius: 20px;
@@ -180,7 +183,7 @@ body {
     background: #8f2e2e;
 }
 
-/* Sidebar - mismo estilo pero con tonos rosas */
+/* ===== CARRITO LATERAL ===== */
 .cart-sidebar {
     position: fixed;
     top: 0;
@@ -248,6 +251,10 @@ body {
     background: #fce4e4;
 }
 
+.cart-item__info {
+    flex: 1;
+}
+
 .cart-item__name {
     font-weight: 500;
     font-size: 0.95rem;
@@ -256,6 +263,12 @@ body {
 .cart-item__price {
     font-size: 0.85rem;
     color: #b33b3b;
+}
+
+.cart-item__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
 .cart-item__btn {
@@ -312,6 +325,7 @@ body {
     background: #8f2e2e;
 }
 
+/* ===== OVERLAY ===== */
 .overlay {
     position: fixed;
     inset: 0;
@@ -324,7 +338,7 @@ body {
     display: block;
 }
 
-/* Responsive */
+/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .header__inner {
         flex-direction: column;

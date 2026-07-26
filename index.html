@@ -3,36 +3,39 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tienda de Rosas</title>
+    <title>🌹 Tienda de Rosas</title>
     <link rel="stylesheet" href="styles.css" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
 </head>
 <body>
+    <!-- ===== ENCABEZADO ===== -->
     <header class="header">
         <div class="container header__inner">
-            <h1 class="header__logo">🌹 Tienda de rosas</h1>
+            <h1 class="header__logo">🌹 Tienda de Rosas</h1>
             <nav class="header__nav">
                 <button class="nav__btn active" data-category="all">Todas</button>
                 <button class="nav__btn" data-category="rojas">Rojas</button>
                 <button class="nav__btn" data-category="blancas">Blancas</button>
                 <button class="nav__btn" data-category="rosadas">Rosadas</button>
+                <button class="nav__btn" data-category="amarillas">Amarillas</button>
             </nav>
             <button class="header__cart-btn" id="cartToggle" aria-label="Abrir carrito">
-            <span class="cart-badge" id="cartCount">0</span>
+                🛍️ <span class="cart-badge" id="cartCount">0</span>
             </button>
         </div>
     </header>
 
-    <!-- Contenido principal: catálogo -->
+    <!-- ===== CATÁLOGO ===== -->
     <main class="main container">
         <section class="catalog">
             <h2 class="catalog__title">Nuestras Rosas</h2>
             <div class="catalog__grid" id="productGrid">
-                <!-- Generado con JS -->
+                <!-- Los productos se generan con JavaScript -->
             </div>
         </section>
     </main>
 
+    <!-- ===== CARRITO LATERAL ===== -->
     <aside class="cart-sidebar" id="cartSidebar">
         <div class="cart-sidebar__header">
             <h2>Tu Carrito</h2>
@@ -47,7 +50,10 @@
         </div>
     </aside>
 
+    <!-- ===== OVERLAY (fondo oscuro) ===== -->
     <div class="overlay" id="overlay"></div>
+
+    <!-- ===== JAVASCRIPT ===== -->
     <script src="script.js"></script>
 </body>
 </html>
