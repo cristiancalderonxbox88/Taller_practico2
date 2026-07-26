@@ -1,59 +1,46 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>🌹 Tienda de Rosas</title>
-    <link rel="stylesheet" href="styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tienda de Rosas</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- ===== ENCABEZADO ===== -->
-    <header class="header">
-        <div class="container header__inner">
-            <h1 class="header__logo">🌹 Tienda de Rosas</h1>
-            <nav class="header__nav">
-                <button class="nav__btn active" data-category="all">Todas</button>
-                <button class="nav__btn" data-category="rojas">Rojas</button>
-                <button class="nav__btn" data-category="blancas">Blancas</button>
-                <button class="nav__btn" data-category="rosadas">Rosadas</button>
-                <button class="nav__btn" data-category="amarillas">Amarillas</button>
-            </nav>
-            <button class="header__cart-btn" id="cartToggle" aria-label="Abrir carrito">
-                🛍️ <span class="cart-badge" id="cartCount">0</span>
-            </button>
-        </div>
+
+    <header>
+        <h1> Tienda de Rosas</h1>
+        <nav>
+            <button class="nav-btn active" onclick="filtro('todas')">Todas</button>
+            <button onclick="filtro('Rojas')">Rojas</button>
+            <button onclick="filtro('Blancas')">Blancas</button>
+            <button onclick="filtro('Rosadas')">Rosadas</button>
+            <button onclick="filtro('Amarillas')">Amarillas</button>
+        </nav>
+        <button class="cart-btn" onclick="abrirCarrito()">
+            <span class="cart-icon"> $ </span>
+            <span class="cart-text">Carrito</span>
+            <span class="cart-badge" id="contador">0</span>
+            <span class="cart-total" id="totalBtn">$0</span>
+        </button>
     </header>
 
-    <!-- ===== CATÁLOGO ===== -->
-    <main class="main container">
-        <section class="catalog">
-            <h2 class="catalog__title">Nuestras Rosas</h2>
-            <div class="catalog__grid" id="productGrid">
-                <!-- Los productos se generan con JavaScript -->
-            </div>
-        </section>
+    <main>
+        <div id="productos"></div>
     </main>
 
-    <!-- ===== CARRITO LATERAL ===== -->
-    <aside class="cart-sidebar" id="cartSidebar">
-        <div class="cart-sidebar__header">
-            <h2>Tu Carrito</h2>
-            <button class="cart-sidebar__close" id="cartClose">&times;</button>
+    <!-- Modal del carrito -->
+    <div id="modalCarrito" style="display:none;">
+        <div id="contenidoCarrito">
+            <h4>AGREGADO AL CARRITO</h4>
+            <div id="listaCarrito"></div>
+            <p><strong>Total: $<span id="totalCarrito">0</span></strong></p>
+            <button onclick="cerrarCarrito()">Cerrar</button>
+            <button onclick="pagar()">Pagar</button>
+            <button onclick="vaciarCarrito()">Vaciar</button>
         </div>
-        <div class="cart-sidebar__body" id="cartItems">
-            <p class="cart-empty">No hay rosas en el carrito.</p>
-        </div>
-        <div class="cart-sidebar__footer">
-            <p class="cart-total">Total: <span id="cartTotal">$0.00</span></p>
-            <button class="btn-checkout" id="checkoutBtn">Proceder al pago</button>
-        </div>
-    </aside>
+    </div>
 
-    <!-- ===== OVERLAY (fondo oscuro) ===== -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- ===== JAVASCRIPT ===== -->
     <script src="script.js"></script>
 </body>
 </html>

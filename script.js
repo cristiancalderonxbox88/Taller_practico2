@@ -1,163 +1,166 @@
-const products = [
-    { id: 1, name: 'Rosa Roja Clásica', category: 'rojas', price: 15, image: 'https://picsum.photos/seed/redrose/400/300' },
-    { id: 2, name: 'Rosa Roja Corazón', category: 'rojas', price: 20, image: 'https://picsum.photos/seed/redrose2/400/300' },
-    { id: 3, name: 'Rosa Blanca Pura', category: 'blancas', price: 18, image: 'https://picsum.photos/seed/whiterose/400/300' },
-    { id: 4, name: 'Rosa Blanca Nieve', category: 'blancas', price: 22, image: 'https://picsum.photos/seed/whiterose2/400/300' },
-    { id: 5, name: 'Rosa Rosada Dulce', category: 'rosadas', price: 16, image: 'https://picsum.photos/seed/pinkrose/400/300' },
-    { id: 6, name: 'Rosa Rosada Encanto', category: 'rosadas', price: 19, image: 'https://picsum.photos/seed/pinkrose2/400/300' },
-    { id: 7, name: 'Rosa Amarilla Sol', category: 'amarillas', price: 17, image: 'https://picsum.photos/seed/yellowrose/400/300' },
-    { id: 8, name: 'Rosa Naranja Fuego', category: 'naranjas', price: 21, image: 'https://picsum.photos/seed/orangerose/400/300' },
-    { id: 9, name: 'Rosa Vintage', category: 'rosadas', price: 25, image: 'https://picsum.photos/seed/vintagerose/400/300' },
+// ===== LISTA DE PRODUCTOS =====
+var productos = [
+    { id: 1, nombre: 'Explorer', categoria: 'rojas', precio: 15, imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_VkNYRwYvgM1GgZ750e-wUOkH-rvzPXIGX3NiuKUXwg&s=10' },
+    { id: 2, nombre: 'Candelight', categoria: 'blancas', precio: 20, imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_MYtDGeZuEnj7avMfMKjs1E8iLaiCHNEqtn0qgD1q91v86f5QrtcFC_s&s=10' },
+    { id: 3, nombre: 'Vendela', categoria: 'blancas', precio: 18, imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMGwkMvEkvmmTruZYWo88KD63mjzD2R2sBztfWdKDado8-QKy6CqTHTOk&s=10' },
+    { id: 4, nombre: 'Tibet', categoria: 'blancas', precio: 22, imagen: 'https://rp-webpage-assets.s3.amazonaws.com/Tibet_Rose_Aerial_View_Rosaprima.jpg' },
+    { id: 5, nombre: 'Pink Floyd', categoria: 'rosadas', precio: 16, imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXwBx_Pcdp9x4TJal-80CQ0QxRP83HM5YZlDywB5Irog0JG_3K0oGxi4A&s=10' },
+    { id: 6, nombre: 'Topaz', categoria: 'rosadas', precio: 19, imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWMtU4Cu7Vh2cQnbbJGWx2tU4Nn0zaOJpfm1W4z9VPYNLoefFKpJ27Ezg&s=10' },
+    { id: 7, nombre: 'Brighton', categoria: 'amarillas', precio: 17, imagen: 'https://intiroses.com/wp-content/uploads/2019/07/yellow-brighton.jpg' },
+    { id: 8, nombre: 'Hummer', categoria: 'amarillas', precio: 21, imagen: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKmm0ByQKUa6aLbKWndm0ho3cpDJtOTuMYxnx4kBYDE2tuuwTUFfZQluk&s=10' }
 ];
 
-let cart = [];
+var carrito = [];
+var categoriaActual = 'todas';
 
-const productGrid = document.getElementById('productGrid');
-const cartToggle = document.getElementById('cartToggle');
-const cartSidebar = document.getElementById('cartSidebar');
-const cartClose = document.getElementById('cartClose');
-const overlay = document.getElementById('overlay');
-const cartItemsContainer = document.getElementById('cartItems');
-const cartTotalSpan = document.getElementById('cartTotal');
-const cartCountSpan = document.getElementById('cartCount');
-const checkoutBtn = document.getElementById('checkoutBtn');
-const categoryBtns = document.querySelectorAll('.nav__btn');
+function renderizarProductos() {
+    var contenedor = document.getElementById('productos');
+    var filtrados = (categoriaActual === 'todas') 
+        ? productos 
+        : productos.filter(p => p.categoria.toLowerCase() === categoriaActual.toLowerCase());
+    //                             ^^^^^^^^^^^               ^^^^^^^^^^^   (ahora no importa mayúsculas)
 
-function renderProducts(category = 'all') {
-    const filtered = category === 'all' ? products : products.filter(p => p.category === category);
-    if (filtered.length === 0) {
-        productGrid.innerHTML = `<p class="no-products">No hay rosas de este color.</p>`;
+    if (filtrados.length === 0) {
+        contenedor.innerHTML = '<p style="text-align:center; color:white; font-size:1.2rem;">No hay rosas de este color.</p>';
         return;
     }
-    productGrid.innerHTML = filtered.map(product => `
-        <div class="product-card" data-id="${product.id}">
-            <img class="product-card__image" src="${product.image}" alt="${product.name}" loading="lazy" />
-            <div class="product-card__body">
-                <h3 class="product-card__name">${product.name}</h3>
-                <span class="product-card__category">${product.category}</span>
-                <span class="product-card__price">$${product.price.toFixed(2)}</span>
-                <button class="product-card__add" data-id="${product.id}">Agregar al carrito</button>
-            </div>
-        </div>
-    `).join('');
-    document.querySelectorAll('.product-card__add').forEach(btn => {
-        btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.id)));
-    });
-}
 
-function renderCart() {
-    if (cart.length === 0) {
-        cartItemsContainer.innerHTML = `<p class="cart-empty">No hay rosas en el carrito.</p>`;
-        cartTotalSpan.textContent = '$0.00';
-        cartCountSpan.textContent = '0';
-        return;
-    }
-    let html = '';
-    let total = 0;
-    let totalItems = 0;
-    cart.forEach(item => {
-        const product = products.find(p => p.id === item.productId);
-        if (!product) return;
-        total += product.price * item.quantity;
-        totalItems += item.quantity;
+    var html = '';
+    for (var i = 0; i < filtrados.length; i++) {
+        var p = filtrados[i];
         html += `
-            <div class="cart-item" data-id="${item.productId}">
-                <img class="cart-item__image" src="${product.image}" alt="${product.name}" />
-                <div class="cart-item__info">
-                    <div class="cart-item__name">${product.name}</div>
-                    <div class="cart-item__price">$${product.price.toFixed(2)}</div>
-                </div>
-                <div class="cart-item__actions">
-                    <button class="cart-item__btn decrement" data-id="${item.productId}">−</button>
-                    <span class="cart-item__quantity">${item.quantity}</span>
-                    <button class="cart-item__btn increment" data-id="${item.productId}">+</button>
-                    <button class="cart-item__remove" data-id="${item.productId}">✕</button>
-                </div>
+            <div class="producto">
+                <img src="${p.imagen}" alt="${p.nombre}" loading="lazy">
+                <h3>${p.nombre}</h3>
+                <p>$${p.precio}</p>
+                <button onclick="agregarAlCarrito(${p.id})">Añadir</button>
             </div>
         `;
-    });
-    cartItemsContainer.innerHTML = html;
-    cartTotalSpan.textContent = `$${total.toFixed(2)}`;
-    cartCountSpan.textContent = totalItems;
-
-    document.querySelectorAll('.cart-item__btn.increment').forEach(btn => {
-        btn.addEventListener('click', () => addToCart(parseInt(btn.dataset.id)));
-    });
-    document.querySelectorAll('.cart-item__btn.decrement').forEach(btn => {
-        btn.addEventListener('click', () => removeFromCart(parseInt(btn.dataset.id)));
-    });
-    document.querySelectorAll('.cart-item__remove').forEach(btn => {
-        btn.addEventListener('click', () => removeItemCompletely(parseInt(btn.dataset.id)));
-    });
+    }
+    contenedor.innerHTML = html;
 }
 
-function addToCart(productId) {
-    const existing = cart.find(item => item.productId === productId);
-    if (existing) existing.quantity += 1;
-    else cart.push({ productId, quantity: 1 });
-    updateCart();
+function filtro(categoria) {
+    categoriaActual = categoria;
+    renderizarProductos();
 }
 
-function removeFromCart(productId) {
-    const index = cart.findIndex(item => item.productId === productId);
-    if (index === -1) return;
-    if (cart[index].quantity > 1) cart[index].quantity -= 1;
-    else cart.splice(index, 1);
-    updateCart();
+function agregarAlCarrito(id) {
+    var producto = productos.find(p => p.id === id);
+    if (!producto) return;
+
+    var encontrado = false;
+    for (var i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === id) {
+            carrito[i].cantidad++;
+            encontrado = true;
+            break;
+        }
+    }
+    if (!encontrado) {
+        carrito.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 });
+    }
+    actualizarContador();
+    alert('🌹 Añadiste ' + producto.nombre + ' al carrito');
 }
 
-function removeItemCompletely(productId) {
-    cart = cart.filter(item => item.productId !== productId);
-    updateCart();
+function actualizarContador() {
+    var totalItems = 0, totalPrecio = 0;
+    for (var i = 0; i < carrito.length; i++) {
+        totalItems += carrito[i].cantidad;
+        totalPrecio += carrito[i].precio * carrito[i].cantidad;
+    }
+    document.getElementById('contador').textContent = totalItems;
+    document.getElementById('totalBtn').textContent = '$' + totalPrecio;
+
+    var btn = document.querySelector('.cart-btn');
+    btn.classList.remove('bounce');
+    void btn.offsetWidth;
+    btn.classList.add('bounce');
 }
 
-function clearCart() {
-    cart = [];
-    updateCart();
+function abrirCarrito() {
+    document.getElementById('modalCarrito').style.display = 'flex';
+    mostrarCarrito();
 }
 
-function updateCart() {
-    renderCart();
+function cerrarCarrito() {
+    document.getElementById('modalCarrito').style.display = 'none';
 }
 
-categoryBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        categoryBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderProducts(btn.dataset.category);
-    });
-});
-
-function openCart() {
-    cartSidebar.classList.add('open');
-    overlay.classList.add('active');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeCart() {
-    cartSidebar.classList.remove('open');
-    overlay.classList.remove('active');
-    document.body.style.overflow = '';
-}
-
-cartToggle.addEventListener('click', openCart);
-cartClose.addEventListener('click', closeCart);
-overlay.addEventListener('click', closeCart);
-
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && cartSidebar.classList.contains('open')) closeCart();
-});
-
-checkoutBtn.addEventListener('click', () => {
-    if (cart.length === 0) {
-        alert('No has elegido ninguna rosa.');
+function mostrarCarrito() {
+    var lista = document.getElementById('listaCarrito');
+    var total = 0;
+    if (carrito.length === 0) {
+        lista.innerHTML = '<p>No hay productos en el carrito.</p>';
+        document.getElementById('totalCarrito').textContent = '0';
         return;
     }
-    alert('🌹 ¡Gracias por tu compra! Tus rosas serán entregadas con amor. 🌹');
-    clearCart();
-    closeCart();
-    renderProducts(document.querySelector('.nav__btn.active')?.dataset.category || 'all');
-});
+    var html = '<ul style="list-style:none; padding:0;">';
+    for (var i = 0; i < carrito.length; i++) {
+        var item = carrito[i];
+        var subtotal = item.precio * item.cantidad;
+        total += subtotal;
+        html += `
+            <li>
+                <span><strong>${item.nombre}</strong> x ${item.cantidad} = $${subtotal}</span>
+                <span>
+                    <button onclick="cambiarCantidad(${item.id}, 1)">+</button>
+                    <button onclick="cambiarCantidad(${item.id}, -1)">-</button>
+                    <button onclick="eliminarDelCarrito(${item.id})">✕</button>
+                </span>
+            </li>
+        `;
+    }
+    html += '</ul>';
+    lista.innerHTML = html;
+    document.getElementById('totalCarrito').textContent = total;
+}
 
-renderProducts('all');
-document.querySelector('.nav__btn[data-category="all"]').classList.add('active');
+function cambiarCantidad(id, delta) {
+    for (var i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === id) {
+            carrito[i].cantidad += delta;
+            if (carrito[i].cantidad <= 0) carrito.splice(i, 1);
+            break;
+        }
+    }
+    actualizarContador();
+    mostrarCarrito();
+}
+
+function eliminarDelCarrito(id) {
+    for (var i = 0; i < carrito.length; i++) {
+        if (carrito[i].id === id) {
+            carrito.splice(i, 1);
+            break;
+        }
+    }
+    actualizarContador();
+    mostrarCarrito();
+}
+
+function vaciarCarrito() {
+    if (confirm('¿Seguro que quieres vaciar el carrito?')) {
+        carrito = [];
+        actualizarContador();
+        mostrarCarrito();
+    }
+}
+
+function pagar() {
+    if (carrito.length === 0) {
+        alert('No hay productos para pagar.');
+        return;
+    }
+    var total = 0;
+    for (var i = 0; i < carrito.length; i++) total += carrito[i].precio * carrito[i].cantidad;
+    alert('🌹 ¡Gracias por tu compra! Total: $' + total);
+    carrito = [];
+    actualizarContador();
+    mostrarCarrito();
+    cerrarCarrito();
+}
+
+renderizarProductos();
+actualizarContador();
