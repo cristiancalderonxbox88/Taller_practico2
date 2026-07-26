@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi Tienda</title>
+    <!-- Enlace al CSS externo -->
+    <link rel="stylesheet" href="styles.css" />
+    <!-- Fuente opcional para mejor estilo -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <!-- Encabezado con navegación y carrito -->
+    <header class="header">
+        <div class="container header__inner">
+            <h1 class="header__logo">🛒 MiTienda</h1>
+            <nav class="header__nav">
+                <button class="nav__btn active" data-category="all">Todos</button>
+                <button class="nav__btn" data-category="electronicos">Electrónicos</button>
+                <button class="nav__btn" data-category="ropa">Ropa</button>
+                <button class="nav__btn" data-category="hogar">Hogar</button>
+            </nav>
+            <button class="header__cart-btn" id="cartToggle" aria-label="Abrir carrito">
+                🛍️ <span class="cart-badge" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Contenido principal: catálogo -->
+    <main class="main container">
+        <section class="catalog">
+            <h2 class="catalog__title">Productos</h2>
+            <div class="catalog__grid" id="productGrid">
+                <!-- Los productos se generan dinámicamente con JS -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Sidebar del carrito (oculto por defecto) -->
+    <aside class="cart-sidebar" id="cartSidebar">
+        <div class="cart-sidebar__header">
+            <h2>Tu Carrito</h2>
+            <button class="cart-sidebar__close" id="cartClose">&times;</button>
+        </div>
+        <div class="cart-sidebar__body" id="cartItems">
+            <p class="cart-empty">No hay productos en el carrito.</p>
+        </div>
+        <div class="cart-sidebar__footer">
+            <p class="cart-total">Total: <span id="cartTotal">$0.00</span></p>
+            <button class="btn-checkout" id="checkoutBtn">Proceder al pago</button>
+        </div>
+    </aside>
+
+    <!-- Overlay para cerrar el carrito al hacer clic fuera -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Enlace al JavaScript externo -->
+    <script src="script.js"></script>
+</body>
+</html>
