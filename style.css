@@ -1,4 +1,4 @@
-/* ===== FONDO PRINCIPAL MEJORADO ===== */
+/* ===== FONDE DE LA PAGINA ===== */
 body {
     min-height: 100vh;
     background: 
@@ -12,7 +12,7 @@ body {
     background-blend-mode: normal;
 }
 
-/* ===== HEADER ===== */
+/* ===== ENCABEZADO ===== */
 header {
     background: linear-gradient(135deg, #005d88 0%, #11303a 100%);
     color: white;
@@ -49,7 +49,7 @@ nav button:hover {
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
-/* ===== BOTÓN DEL CARRITO MEJORADO ===== */
+/* ===== BOTÓN DEL CARRITO  ===== */
 .cart-btn {
     background: linear-gradient(145deg, #cc0000, #990000);
     color: white;
@@ -102,7 +102,7 @@ nav button:hover {
     font-size: 14px;
 }
 
-/* ===== ANIMACIÓN DE REBOTE ===== */
+/* ===== ANIMACIÓN  ===== */
 @keyframes bounce {
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
@@ -175,7 +175,7 @@ nav button:hover {
     transform: scale(1.02);
 }
 
-/* ===== MODAL DEL CARRITO ===== */
+/* ===== VENTANA DEL CARRITO ===== */
 #modalCarrito {
     position: fixed;
     top: 0;

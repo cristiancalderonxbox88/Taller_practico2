@@ -12,13 +12,12 @@ var productos = [
 
 var carrito = [];
 var categoriaActual = 'todas';
-
+// ===== FUNCIONES =====
 function renderizarProductos() {
     var contenedor = document.getElementById('productos');
     var filtrados = (categoriaActual === 'todas') 
         ? productos 
         : productos.filter(p => p.categoria.toLowerCase() === categoriaActual.toLowerCase());
-    //                             ^^^^^^^^^^^               ^^^^^^^^^^^   (ahora no importa mayúsculas)
 
     if (filtrados.length === 0) {
         contenedor.innerHTML = '<p style="text-align:center; color:white; font-size:1.2rem;">No hay rosas de este color.</p>';
@@ -39,12 +38,12 @@ function renderizarProductos() {
     }
     contenedor.innerHTML = html;
 }
-
+// ===== FUNCION FILTRO CATEGORIAS =====
 function filtro(categoria) {
     categoriaActual = categoria;
     renderizarProductos();
 }
-
+// ===== FUNCION AGG AL CARRITO =====
 function agregarAlCarrito(id) {
     var producto = productos.find(p => p.id === id);
     if (!producto) return;
@@ -61,9 +60,9 @@ function agregarAlCarrito(id) {
         carrito.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 });
     }
     actualizarContador();
-    alert('🌹 Añadiste ' + producto.nombre + ' al carrito');
+    alert(' Añadiste ' + producto.nombre + ' al carrito');
 }
-
+// ===== CONTADOR Y TOTAL DEL BOTÓN =====
 function actualizarContador() {
     var totalItems = 0, totalPrecio = 0;
     for (var i = 0; i < carrito.length; i++) {
@@ -78,7 +77,7 @@ function actualizarContador() {
     void btn.offsetWidth;
     btn.classList.add('bounce');
 }
-
+// ===== ABRIR Y CERRAR VENTANA CARRITO=====
 function abrirCarrito() {
     document.getElementById('modalCarrito').style.display = 'flex';
     mostrarCarrito();
@@ -154,13 +153,19 @@ function pagar() {
         return;
     }
     var total = 0;
-    for (var i = 0; i < carrito.length; i++) total += carrito[i].precio * carrito[i].cantidad;
-    alert('🌹 ¡Gracias por tu compra! Total: $' + total);
+    for (var i = 0; i < carrito.length; i++) {
+        total += carrito[i].precio * carrito[i].cantidad;
+    }
+    alert('¡Gracias por tu compra! Total: $' + total);
     carrito = [];
     actualizarContador();
     mostrarCarrito();
     cerrarCarrito();
 }
 
+function cerrarPago() {
+    document.getElementById('modalPago').style.display = 'none';
+}
+// ===== INICIALIZACIÓN =====
 renderizarProductos();
 actualizarContador();

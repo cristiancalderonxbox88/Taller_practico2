@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
         <h1> Tienda de Rosas</h1>
         <nav>
@@ -24,23 +23,20 @@
             <span class="cart-total" id="totalBtn">$0</span>
         </button>
     </header>
-
     <main>
         <div id="productos"></div>
     </main>
-
-    <!-- Modal del carrito -->
+    <!-- VENTANA DEL CARRITO -->
     <div id="modalCarrito" style="display:none;">
         <div id="contenidoCarrito">
             <h4>AGREGADO AL CARRITO</h4>
             <div id="listaCarrito"></div>
             <p><strong>Total: $<span id="totalCarrito">0</span></strong></p>
             <button onclick="cerrarCarrito()">Cerrar</button>
-            <button onclick="pagar()">Pagar</button>
+            <button class="btn-pagar" onclick="pagar()"> Pagar ahora</button>
             <button onclick="vaciarCarrito()">Vaciar</button>
         </div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
